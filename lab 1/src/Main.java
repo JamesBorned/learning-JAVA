@@ -6,7 +6,8 @@ public class Main {
         //getNumOfStepsOfSyracuseSeq();
         //findSumOfSeries();
         //findTreasure();
-        logisticMaximin();
+        //logisticMaximin();
+        isTwiceEvenNumber();
     }
 
     public static void getNumOfStepsOfSyracuseSeq(){
@@ -114,19 +115,16 @@ public class Main {
         int height = 0;
         int tmp = 0;
         int maxHeight = Integer.MAX_VALUE;
-        int[] tunHeight = {tunnels, height};
         int count = 0;
 
         while (roads > 0){
             tunnels = in.nextInt();
-            //tunHeight[0] = tunnels;
 
             while (tunnels > 0){
                 height = in.nextInt();
 
                 if (height < maxHeight){
                     maxHeight = height;
-                    //tunHeight[1] = maxHeight;
                 }
 
                 tunnels--;
@@ -143,5 +141,23 @@ public class Main {
         }
 
         System.out.println(count + " " + tmp);
+    }
+
+    public static void isTwiceEvenNumber(){
+        System.out.print("Input number: ");
+
+        Scanner in = new Scanner(System.in);
+        int num = in.nextInt();
+
+        int first = num/100%10;
+        int second = num/10%10;
+        int third = num%10;
+
+        if ((first + second + third) % 2 == 0 && (first*second*third) % 2 == 0){
+            System.out.printf("%d is a 'twice even number'.", num);
+        }
+        else {
+            System.out.printf("%d is not a 'twice even number'.", num);
+        }
     }
 }
