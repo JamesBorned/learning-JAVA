@@ -9,7 +9,6 @@ public class Main {
         Scanner in = new Scanner(System.in);
 
         System.out.println("Solution of task №1");
-        System.out.println();
         System.out.println("Input a string: ");
 
         String str = in.nextLine();
@@ -63,6 +62,23 @@ public class Main {
         for (int i = 0; i < arr.length; ++i){
             System.out.print(arr[i] + " ");
         }
+
+        System.out.println("Solution of task №3");
+
+        System.out.println("Input a number of elements of an array: ");
+
+        int Size = in.nextInt();
+        int[] arr3 = new int[Size];
+
+        System.out.println("Input elements of array: ");
+        for (int i = 0; i < arr3.length; ++i){
+            arr3[i] = in.nextInt();
+        }
+
+        int MaxSumOfSubarray = findMaxSumOfSubarray(arr3);
+        System.out.printf("Maximum sum of array is %d.", MaxSumOfSubarray);
+
+        
     }
 
     public static String findLargSubstrUniqChars (String str){
@@ -140,8 +156,33 @@ public class Main {
             }
         }
 
-        insertionSort(arr);
-
         return arr;
+    }
+
+    public static int findMaxSumOfSubarray(int[] arr){
+        //Kadane's algorithm
+        int MaxSumOfSubarray = arr[0],
+//                LeftPos = 0,
+//                RightPos = 0,
+                Sum = 0;
+//                OverrideLeftPos = -1;
+
+        for (int right = 0; right < arr.length; ++right){
+              Sum += arr[right];
+              MaxSumOfSubarray = Math.max(MaxSumOfSubarray, Sum);
+              Sum = Math.max(Sum, 0);
+//
+//            if (Sum > MaxSumOfSubarray){
+//                MaxSumOfSubarray = Sum;
+//                LeftPos = OverrideLeftPos + 1;
+//                RightPos = right;
+//            }
+//            if (Sum < 0){
+//                Sum = 0;
+//                OverrideLeftPos = right;
+//            }
+        }
+
+        return MaxSumOfSubarray;
     }
 }
