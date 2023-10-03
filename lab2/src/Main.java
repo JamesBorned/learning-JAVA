@@ -114,6 +114,108 @@ public class Main {
             }
             System.out.println();
         }
+
+        System.out.println();
+
+        System.out.println("Solution of task №5");
+
+        System.out.println("Input a number of elements of an array: ");
+
+        int Size5 = in.nextInt();
+        int[] arr5 = new int[Size5];
+
+        System.out.println("Input elements of array: ");
+        for (int i = 0; i < arr5.length; ++i){
+            arr5[i] = in.nextInt();
+        }
+
+        System.out.println("Input a target: ");
+        int target = in.nextInt();
+
+        int[] Pair = findPair(arr5, target);
+        System.out.printf("Pair of elements: %d + %d = %d", Pair[0], Pair[1], target);
+
+        System.out.println();
+
+        System.out.println("Solution of task №6");
+
+        System.out.println("Input a number of rows of an array: ");
+        rows = in.nextInt();
+
+        System.out.println("Input a number of columns of an array: ");
+        cols = in.nextInt();
+
+        arr2D = new int[rows][cols];
+
+        System.out.println("Input elements of array: ");
+        for (int i = 0; i < arr2D.length; ++i){
+            for (int j = 0; j < arr2D[i].length; ++j) {
+                arr2D[i][j] = in.nextInt();
+            }
+        }
+
+        int Sum = findSumOfAllElements(arr2D);
+        System.out.printf("Sum of all elements of array: %d.", Sum);
+
+        System.out.println();
+
+        System.out.println("Solution of task №7");
+
+        System.out.println("Input a number of rows of an array: ");
+        rows = in.nextInt();
+
+        System.out.println("Input a number of columns of an array: ");
+
+        arr2D = new int[rows][cols];
+
+        System.out.println("Input elements of array: ");
+        for (int i = 0; i < arr2D.length; ++i){
+            for (int j = 0; j < arr2D[i].length; ++j) {
+                arr2D[i][j] = in.nextInt();
+            }
+        }
+
+        arr = findMaxItemOfEachRow(arr2D);
+        System.out.println();
+
+        for (int i = 0; i < arr.length; ++i){
+            System.out.print(arr[i] + " ");
+        }
+
+        System.out.println();
+
+        System.out.println("Solution of task №8");
+
+        System.out.println("Input a number of rows of an array: ");
+        rows = in.nextInt();
+
+        System.out.println("Input a number of columns of an array: ");
+        cols = in.nextInt();
+
+        arr2D = new int[rows][cols];
+
+        System.out.println("Input elements of array: ");
+        for (int i = 0; i < arr2D.length; ++i){
+            for (int j = 0; j < arr2D[i].length; ++j) {
+                arr2D[i][j] = in.nextInt();
+            }
+        }
+
+        for (int i = 0; i < arr2D.length; ++i){
+            for (int j = 0; j < arr2D[i].length; ++j) {
+                System.out.print(arr2D[i][j] + " ");
+            }
+            System.out.println();
+        }
+
+        NewArr2D = leftRotateArray90deg(arr2D);
+
+        for (int i = 0; i < arr2D.length; ++i){
+            for (int j = 0; j < arr2D[i].length; ++j) {
+                System.out.print(NewArr2D[i][j] + " ");
+            }
+            System.out.println();
+        }
     }
 
     public static String findLargSubstrUniqChars (String str){
@@ -231,5 +333,62 @@ public class Main {
         }
 
         return NewArr;
+    }
+
+    public static int[] findPair (int[] arr, int target){
+        int[] Pair = {0, 0};
+        for (int i = 0; i < arr.length - 1; ++i){
+            for (int j = i + 1; j < arr.length; j++){
+                if (arr[i] + arr[j] == target){
+                    Pair[0] = arr[i];
+                    Pair[1] = arr[j];
+                    return Pair;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public static int findSumOfAllElements(int[][] arr){
+        int Sum = 0;
+        for (int i = 0; i < arr.length; ++i){
+            for (int j = 0; j < arr[i].length; j++){
+                Sum += arr[i][j];
+            }
+        }
+
+        return Sum;
+    }
+
+    public static int[] findMaxItemOfEachRow(int[][] arr){
+        int[] MaxItems = new int[arr.length];
+        int Row = 0;
+
+        for (int i = 0; i < arr.length; ++i){
+            for (int j = 0; j < arr[i].length; ++j){
+                    MaxItems[i] = Math.max(arr[i][j], MaxItems[i]);
+            }
+        }
+
+        return MaxItems;
+    }
+
+    public static int[][] leftRotateArray90deg(int[][] arr){
+        int[][] NewArr = new int[arr.length][arr[0].length];
+
+        for (int i = 0; i < NewArr.length; ++i){
+            for (int j = 0; j < NewArr[i].length; ++j){
+                NewArr[i][j] = arr[i][NewArr.length - j - 1];
+            }
+        }
+
+        for (int i = 0; i < NewArr.length; ++i){
+            for (int j = 0; j < NewArr[i].length; ++j){
+                arr[i][j] = NewArr[j][i];
+            }
+        }
+
+        return arr;
     }
 }
