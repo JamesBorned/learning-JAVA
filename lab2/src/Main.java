@@ -63,6 +63,8 @@ public class Main {
             System.out.print(arr[i] + " ");
         }
 
+        System.out.println();
+
         System.out.println("Solution of task №3");
 
         System.out.println("Input a number of elements of an array: ");
@@ -78,7 +80,40 @@ public class Main {
         int MaxSumOfSubarray = findMaxSumOfSubarray(arr3);
         System.out.printf("Maximum sum of array is %d.", MaxSumOfSubarray);
 
-        
+        System.out.println();
+
+        System.out.println("Solution of task №4");
+
+        System.out.println("Input a number of rows of an array: ");
+        int rows = in.nextInt();
+
+        System.out.println("Input a number of columns of an array: ");
+        int cols = in.nextInt();
+
+        int[][] arr2D = new int[rows][cols];
+
+        System.out.println("Input elements of array: ");
+        for (int i = 0; i < arr2D.length; ++i){
+            for (int j = 0; j < arr2D[i].length; ++j) {
+                arr2D[i][j] = in.nextInt();
+            }
+        }
+
+        for (int i = 0; i < arr2D.length; ++i){
+            for (int j = 0; j < arr2D[i].length; ++j) {
+                System.out.print(arr2D[i][j] + " ");
+            }
+            System.out.println();
+        }
+
+        int[][] NewArr2D = rightRotateArray90deg(arr2D);
+
+        for (int i = 0; i < arr2D.length; ++i){
+            for (int j = 0; j < arr2D[i].length; ++j) {
+                System.out.print(NewArr2D[i][j] + " ");
+            }
+            System.out.println();
+        }
     }
 
     public static String findLargSubstrUniqChars (String str){
@@ -184,5 +219,17 @@ public class Main {
         }
 
         return MaxSumOfSubarray;
+    }
+
+    public static int[][] rightRotateArray90deg(int[][] arr){
+        int[][] NewArr = new int[arr.length][arr[0].length];
+
+        for (int i = 0; i < NewArr.length; ++i){
+            for (int j = 0; j < NewArr[i].length; ++j){
+                NewArr[j][NewArr.length - i - 1] = arr[i][j];
+            }
+        }
+
+        return NewArr;
     }
 }
