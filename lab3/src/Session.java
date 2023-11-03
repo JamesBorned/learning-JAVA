@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Session {
     public Session(String date, String time, int numberOfTickets){
         this.Date = date;
@@ -5,6 +7,10 @@ public class Session {
         this.NumberOfTickets = numberOfTickets;
     }
 
+    private ArrayList<MovieSessionHall> movieSessionHalls = new ArrayList<>();
+    public ArrayList<MovieSessionHall> getMovieSessionHalls(){
+        return movieSessionHalls;
+    }
     public String getDate(){
         return Date;
     }
@@ -27,6 +33,15 @@ public class Session {
 
     public void setNumberOfTickets(int numberOfTickets){
         this.NumberOfTickets = numberOfTickets;
+    }
+
+    public Hall getSessionHall(MovieSession movieSession){
+        for (int i = 0; i < movieSessionHalls.size(); ++i){
+            if (movieSessionHalls.get(i).getMovieSession() == movieSession) {
+                return movieSessionHalls.get(i).getHall();
+            }
+        }
+        return null;
     }
 
     private String Date;

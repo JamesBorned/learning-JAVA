@@ -1,9 +1,13 @@
+import java.util.ArrayList;
+
 public class Cinema {
     public Cinema(String nameOfCinema, String address, int numberOfHalls){
         this.NameOfCinema = nameOfCinema;
         this.Address = address;
         this.NumberOfHalls = numberOfHalls;
     }
+
+    ArrayList<Hall> HallsOfCinema = new ArrayList<>();
     public String getNameOfCinema(){
         return NameOfCinema;
     }
