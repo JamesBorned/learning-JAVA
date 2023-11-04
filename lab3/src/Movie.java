@@ -4,8 +4,17 @@ public class Movie {
     public Movie(String nameOfMovie, String duration){
         this.NameOfMovie = nameOfMovie;
         this.Duration = duration;
+        movieSessions = new ArrayList<MovieSession>();
     }
-    private ArrayList<MovieSession> movieSessions = new ArrayList<>();
+    private ArrayList<MovieSession> movieSessions;
+
+    public void initMovieSessions(MovieSession movieSession){
+        for (int i = 0; i < movieSessions.size(); ++i){
+            if (movieSession.getMovie().NameOfMovie.equals(this.getNameOfMovie())){
+                movieSessions.set(i, movieSession);
+            }
+        }
+    }
     public ArrayList<MovieSession> getMovieSessions(){
         return movieSessions;
     }
@@ -25,19 +34,19 @@ public class Movie {
         this.Duration = duration;
     }
 
-    public Session getMovieSession(Movie movie, MovieSession movieSession){
+    public Session getMovieSession(){
         for (int i = 0; i < movieSessions.size(); ++i){
-            if (movieSessions.get(i).getMovie() == movie) {
+            if (movieSessions.get(i).getMovie() == this) {
                 return movieSessions.get(i).getSession();
             }
         }
         return null;
     }
 
-    public int getSumNumberOfTickets(Movie movie){
+    public int getSumNumberOfTickets(){
         int SumNumberOfTickets = 0;
         for (int i = 0; i < movieSessions.size(); ++i){
-            if (movieSessions.get(i).getMovie() == movie) {
+            if (movieSessions.get(i).getMovie() == this) {
                 SumNumberOfTickets += movieSessions.get(i).getSession().getNumberOfTickets();
             }
         }

@@ -3,9 +3,10 @@ public class Hall {
         this.NumberOfHall = numberOfHall;
         this.AmountOfPlaces = amountOfPlaces;
         this.NumberOfRows = numberOfRows;
+        places = new Place[this.NumberOfRows][this.AmountOfPlaces/this.NumberOfRows];
     }
 
-    private Place places[][] = new Place[getNumberOfRows()][getAmountOfPlaces()/getNumberOfRows()];
+    private Place places[][];
 
     public void initHall(int price){
         for(int i = 0; i < NumberOfRows; ++i){
@@ -58,5 +59,5 @@ public class Hall {
     }
     private int NumberOfHall;
     private int AmountOfPlaces;
-    private int NumberOfRows;
+    private int NumberOfRows = 1;
 }

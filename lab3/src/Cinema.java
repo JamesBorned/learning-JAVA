@@ -5,9 +5,11 @@ public class Cinema {
         this.NameOfCinema = nameOfCinema;
         this.Address = address;
         this.NumberOfHalls = numberOfHalls;
+        HallsOfCinema = new Hall[this.NumberOfHalls];
     }
 
-    ArrayList<Hall> HallsOfCinema = new ArrayList<>(getNumberOfHalls());
+    Hall[] HallsOfCinema;
+
     public String getNameOfCinema(){
         return NameOfCinema;
     }
