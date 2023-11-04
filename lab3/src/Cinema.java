@@ -7,7 +7,7 @@ public class Cinema {
         this.NumberOfHalls = numberOfHalls;
     }
 
-    ArrayList<Hall> HallsOfCinema = new ArrayList<>();
+    ArrayList<Hall> HallsOfCinema = new ArrayList<>(getNumberOfHalls());
     public String getNameOfCinema(){
         return NameOfCinema;
     }

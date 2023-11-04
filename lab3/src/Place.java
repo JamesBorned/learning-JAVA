@@ -6,24 +6,34 @@ public class Place {
         this.Price = price;
     }
 
-    private ArrayList<String> freePlaces = new ArrayList<>();
+    private ArrayList<ArrayList<String>> freePlaces = new ArrayList<>();
 
-    public ArrayList<String> initFreePlaces(){
-        for(int i = 0; i < freePlaces.size(); ++i){
-            initFreePlaces().set(i, "free");
+    public ArrayList<ArrayList<String>> initFreePlaces() {
+        for (int i = 0; i < freePlaces.size(); ++i) {
+            for (int j = 0; j < freePlaces.get(i).size(); ++j) {
+                freePlaces.get(i).set(j, "free");
+            }
         }
         return freePlaces;
     }
 
-    public String isOccuiped() {
-        for (int i = 0; i < freePlaces.size(); ++i) {
-            if (freePlaces.get(this.Number).equals("free")) {
-                return "    ";
-            } else {
-                return "OCCUP";
-            }
+    public String isOccupied() {
+        if (freePlaces.get(this.Row).get(this.Number).equals("free")) {
+            return "    ";
         }
-        return "    ";
+        else {
+            return "OCCUP";
+        }
+    }
+
+    public boolean isChoosed() {
+        if (this.isOccupied() == "    "){
+            freePlaces.get(this.Row).set(this.Number, "occupied");
+            return true;
+        }
+        else {
+            return false;
+        }
     }
     public int getRow(){
         return Row;
