@@ -88,8 +88,9 @@ public class Main {
         List<MovieSession> moviesSessions = Arrays.asList(movieSession1, movieSession2, movieSession3, movieSession4, movieSession5, movieSession6);
         // Инициализируем список вида фильм-сеанс
         for (int i = 0; i < movies.size(); ++i) {
+            Movie movie = movies.get(i);
             for (int j = 0; j < moviesSessions.size(); ++j) {
-                movies.get(i).initMovieSessions(moviesSessions.get(j));
+                movie.initMovieSessions(moviesSessions.get(j));
             }
         }
         // Создадим расписание сеансов фильмов вида сеанс-зал
@@ -111,16 +112,24 @@ public class Main {
         Scanner in = new Scanner(System.in);
         System.out.println("Input a name of movie: ");
         String nameOfMovie = in.nextLine();
-        //System.out.println(movies.get(0).getNameOfMovie());
+
+        Movie movie = new Movie("", "");
+        for (int i = 0; i < movies.size(); ++i){
+            if (nameOfMovie.equals(movies.get(i).getNameOfMovie())){
+                movie = movies.get(i);
+            }
+        }
+
         boolean flag = false;
         for (int i = 0; i < movies.size(); ++i) {
-            if (nameOfMovie.equals(movies.get(i).getNameOfMovie())) {
+            if (nameOfMovie.equals(movies.get(i).getNameOfMovie()) && movies.get(i).getSumNumberOfTickets() != 0) {
                 flag = true;
-                Movie movie = movies.get(i);
+
                 System.out.println("Input a date:");
                 String date = in.nextLine();
                 for (int s = 0; s < movie.getMovieSessions().size(); ++s){
                     if (movie.getMovieSessions().get(s).getSession().getDate().equals(date)) {
+                        flag = false;
                         int SumOfTicketsOfSessions = 0;
                         for (int j = 0; j < movie.getMovieSessions().size(); ++j) {
                             if (movie.getMovieSessions().get(j).getSession().getDate().equals(date)) {
@@ -130,11 +139,12 @@ public class Main {
                         if (SumOfTicketsOfSessions == 0) {
                             System.out.println("Sorry, there are no tickets for this date.");
                             break;
-                        } else {
+                        }
+                        else {
                             for (int k = 0; k < movieSessionHalls.size(); ++k) {
                                 if (movieSessionHalls.get(k).getMovieSession().getSession().getDate().equals(date)
                                         && movieSessionHalls.get(k).getMovieSession().getMovie() == movie) {
-                                    sessionHalls.set(k, movieSessionHalls.get(k).getHall());
+                                    sessionHalls.add(movieSessionHalls.get(k).getHall());
                                 }
                             }
                             // Создадим множество уникальных элементов, чтобы залы не повторялись
@@ -147,7 +157,7 @@ public class Main {
                                 for (int l = 0; l < halls[m].length; ++l) {
                                     for (int hall = 0; hall < sessionHalls.size(); ++hall) {
                                         if (halls[m][l] == sessionHalls.get(hall)) {
-                                            ListOfCinemas.set(hall, cinemas.get(m));
+                                            ListOfCinemas.add(cinemas.get(m));
                                         }
                                     }
                                 }
@@ -155,12 +165,13 @@ public class Main {
                             Set<Cinema> set2 = new HashSet<>(ListOfCinemas);
                             ListOfCinemas.clear();
                             ListOfCinemas.addAll(set2);
+                            int Number = 0;
                             for (int cinema = 0; cinema < ListOfCinemas.size(); cinema++) {
                                 System.out.println(ListOfCinemas.get(cinema).getNameOfCinema() + " "
                                         + ListOfCinemas.get(cinema).getAddress());
                             }
-
-                            System.out.println("Please, choose your preferred cinema. Enter its name.");
+                            // На тот случай, если в городе есть несколько кинотеатров с разными названиями.
+                            System.out.println("Please, choose your preferred cinema. Enter its name. ");
                             String nameOfCinema = in.nextLine();
 
                             System.out.println("Available sessions: ");
@@ -172,10 +183,15 @@ public class Main {
                             }
                         }
                     }
+                    if (flag == true){
+                        System.out.printf("Sorry, there are no sessions for " + movie.getNameOfMovie() + " on this date.");
+                        break;
+                    }
                 }
-                if (flag == false){
-                    System.out.println("Sorry, this movie is not on the list.");
-                }
+            }
+            if (flag == false){
+                System.out.println("Sorry, this movie is not on the list.");
+                break;
             }
         }
     }
