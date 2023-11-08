@@ -1,34 +1,38 @@
 import java.util.ArrayList;
 public class Place {
-    public Place(int row, int number, int price){
+    public Place(int row, int number, int price, String occupancy){
         this.Row = row;
         this.Number = number;
         this.Price = price;
+        this.Occupancy = occupancy;
     }
 
-    private ArrayList<ArrayList<String>> freePlaces = new ArrayList<>();
-
-    public ArrayList<ArrayList<String>> initFreePlaces() {
-        for (int i = 0; i < freePlaces.size(); ++i) {
-            for (int j = 0; j < freePlaces.get(i).size(); ++j) {
-                freePlaces.get(i).set(j, "free");
-            }
-        }
-        return freePlaces;
-    }
+//    private ArrayList<ArrayList<String>> freePlaces = new ArrayList<>();
+//
+//    public ArrayList<ArrayList<String>> getFreePlaces(){
+//        return freePlaces;
+//    }
+//    public void initFreePlaces() {
+//        for (int i = 0; i < this.getFreePlaces().size(); ++i) {
+//            for (int j = 0; j < this.getFreePlaces().get(i).size(); ++j) {
+//                this.getFreePlaces().get(i).add("free");
+//            }
+//        }
+//    }
 
     public String isOccupied() {
-        if (freePlaces.get(this.Row).get(this.Number).equals("free")) {
-            return "    ";
+        if (this.getOccupancy().equals("free")) {
+            return "     ";
         }
-        else {
+        else if (this.getOccupancy().equals("occupied")){
             return "OCCUP";
         }
+        return "";
     }
 
-    public boolean isChoosed() {
-        if (this.isOccupied() == "    "){
-            freePlaces.get(this.Row).set(this.Number, "occupied");
+    public boolean choosePlace() {
+        if (this.isOccupied() == "     "){
+            this.setOccupancy("occupied");
             return true;
         }
         else {
@@ -59,7 +63,16 @@ public class Place {
         this.Number = number;
     }
 
+    public String getOccupancy(){
+        return Occupancy;
+    }
+
+    public void setOccupancy(String occupancy){
+        this.Occupancy = occupancy;
+    }
+
     private int Row;
     private int Number;
     private int Price;
+    private String Occupancy;
 }

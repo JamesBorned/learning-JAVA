@@ -20,6 +20,15 @@ public class MovieSession {
         this.Session = session;
     }
 
+    public int getNumberOfMovieSession(){
+        return NumberOfMovieSession;
+    }
+
+    public void setNumberOfMovieSession(int numberOfMovieSession){
+        this.NumberOfMovieSession = numberOfMovieSession;
+    }
+
     private Movie Movie;
     private Session Session;
+    private int NumberOfMovieSession;
 }

@@ -8,10 +8,18 @@ public class Hall {
 
     private Place places[][];
 
+    public Place[][] getPlaces(){
+        return places;
+    }
+
+    public void setPlaces(Place[][] places){
+        this.places = places;
+    }
+
     public void initHall(int price){
-        for(int i = 0; i < NumberOfRows; ++i){
-            for(int j = 0; j < AmountOfPlaces/NumberOfRows; ++j){
-                this.places[i][j] = new Place(i, AmountOfPlaces/NumberOfRows - j, price);
+        for(int i = 0; i < this.getNumberOfRows(); ++i){
+            for(int j = 0; j < this.getAmountOfPlaces()/this.getNumberOfRows(); ++j){
+                this.getPlaces()[i][j] = new Place(i, this.getAmountOfPlaces()/this.getNumberOfRows() - j, price,"free");
             }
         }
     }
@@ -41,21 +49,51 @@ public class Hall {
     }
 
     public String getPlace(int row, int col){
-        Place place = this.places[row][col];
-        return " "+place.getNumber()+'\n'+place.isOccupied();
+        Place place = this.getPlaces()[row][col];
+        if (place.getOccupancy() == "free") {
+            return " " + place.getNumber() + " " + "     ";
+        }
+        else {
+            return " " + place.getNumber() + " " + "OCCUP";
+        }
     }
 
     public void printHallPlan() {
-        System.out.println("  +----+----+----+----+----+----+----+----+");
-        for (int row = NumberOfRows; row > -1; row--){
+        int offset = NumberOfRows;
+        String split = "+--------";
+        System.out.print("  ");
+        for (int i = 0; i < this.getAmountOfPlaces()/this.getNumberOfRows(); ++i){
+            System.out.printf(split);
+        }
+        System.out.print("+");
+        System.out.print("\n");
+        for (int row = this.getNumberOfRows(); row > 0; row--){
+            offset = row;
             System.out.print(row);
-            for (int col = 0; col < AmountOfPlaces/NumberOfRows; col++){
-                System.out.print("|"+getPlace(row,col));
+            for (int col = 0; col < this.getAmountOfPlaces()/this.getNumberOfRows(); col++){
+                System.out.print("|"+this.getPlace(row - offset,col));
             }
             System.out.println("|");
-            System.out.println("  +----+----+----+----+----+----+----+----+");
+            System.out.print("  ");
+            for (int i = 0; i < this.getAmountOfPlaces()/this.getNumberOfRows(); ++i){
+                System.out.printf(split);
+            }
+            System.out.print("+");
+            System.out.print("\n");
         }
         System.out.println();
+    }
+
+    public boolean areOccupied(){
+        for (int i = 0; i < this.getPlaces().length; ++i){
+            int row = i;
+            for (int j = 0; j < this.getPlaces()[i].length; ++j){
+                if (this.getPlaces()[row][j].isOccupied() == "    "){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
     private int NumberOfHall;
     private int AmountOfPlaces;

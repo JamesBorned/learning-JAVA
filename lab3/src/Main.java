@@ -45,6 +45,9 @@ public class Main {
         Hall C1Hall2 = new Hall(2, 200, 10);
         Hall C1Hall3 = new Hall(3, 400, 15);
         cinema1.HallsOfCinema = new Hall[]{C1Hall1, C1Hall2, C1Hall3};
+        for (int i = 0; i < cinema1.HallsOfCinema.length; ++i) {
+            cinema1.HallsOfCinema[i].initHall(200);
+        }
 
         //System.out.print(cinema2.HallsOfCinema.length);
         Hall C2Hall1 = new Hall(1, 130, 13);
@@ -52,16 +55,23 @@ public class Main {
         Hall C2Hall3 = new Hall(3, 400, 15);
         Hall C2Hall4 = new Hall(4, 200, 10);
         cinema2.HallsOfCinema = new Hall[]{C2Hall1, C2Hall2, C2Hall3, C2Hall4};
+        for (int i = 0; i < cinema2.HallsOfCinema.length; ++i) {
+            cinema2.HallsOfCinema[i].initHall(150);
+        }
 
         //System.out.print(cinema3.HallsOfCinema.length);
         Hall C3Hall1 = new Hall(1, 130, 13);
         Hall C3Hall2 = new Hall(2, 200, 10);
         cinema3.HallsOfCinema = new Hall[]{C3Hall1, C3Hall2};
+        for (int i = 0; i < cinema3.HallsOfCinema.length; ++i) {
+            cinema3.HallsOfCinema[i].initHall(100);
+        }
 
         Hall halls[][] = new Hall[cinemas.size()][];
         // Все залы сети кинотеатров
         for (int i = 0; i < cinemas.size(); ++i) {
             halls[i] = cinemas.get(i).HallsOfCinema;
+            cinemas.get(i).setNumberOfCinema(i);
         }
         ArrayList<Hall> sessionHalls = new ArrayList<>();
 
@@ -114,84 +124,166 @@ public class Main {
         String nameOfMovie = in.nextLine();
 
         Movie movie = new Movie("", "");
-        for (int i = 0; i < movies.size(); ++i){
-            if (nameOfMovie.equals(movies.get(i).getNameOfMovie())){
+        // Проверяем, есть ли фильм в списке
+        boolean isOnList = false;
+        for (int i = 0; i < movies.size(); ++i) {
+            if (nameOfMovie.equals(movies.get(i).getNameOfMovie())) {
+                isOnList = true;
                 movie = movies.get(i);
             }
         }
+        if (!isOnList) {
+            System.out.println("Sorry, this movie is not on the list.");
+        }
 
-        boolean flag = false;
-        for (int i = 0; i < movies.size(); ++i) {
-            if (nameOfMovie.equals(movies.get(i).getNameOfMovie()) && movies.get(i).getSumNumberOfTickets() != 0) {
-                flag = true;
+        //System.out.println(movie.getMovieSessions().isEmpty());
+        //System.out.println(nameOfMovie.equals(movie5.getNameOfMovie()));
+        //System.out.println(movie.getSumNumberOfTickets());
 
-                System.out.println("Input a date:");
-                String date = in.nextLine();
-                for (int s = 0; s < movie.getMovieSessions().size(); ++s){
-                    if (movie.getMovieSessions().get(s).getSession().getDate().equals(date)) {
-                        flag = false;
-                        int SumOfTicketsOfSessions = 0;
-                        for (int j = 0; j < movie.getMovieSessions().size(); ++j) {
-                            if (movie.getMovieSessions().get(j).getSession().getDate().equals(date)) {
-                                SumOfTicketsOfSessions += movie.getMovieSessions().get(j).getSession().getNumberOfTickets();
-                            }
-                        }
-                        if (SumOfTicketsOfSessions == 0) {
-                            System.out.println("Sorry, there are no tickets for this date.");
-                            break;
-                        }
-                        else {
-                            for (int k = 0; k < movieSessionHalls.size(); ++k) {
-                                if (movieSessionHalls.get(k).getMovieSession().getSession().getDate().equals(date)
-                                        && movieSessionHalls.get(k).getMovieSession().getMovie() == movie) {
-                                    sessionHalls.add(movieSessionHalls.get(k).getHall());
-                                }
-                            }
-                            // Создадим множество уникальных элементов, чтобы залы не повторялись
-                            Set<Hall> set = new HashSet<>(sessionHalls);
-                            sessionHalls.clear();
-                            sessionHalls.addAll(set);
-                            // Создадим список кинотеатров, в которых проходят сеансы фильмов в определённую дату
-                            ArrayList<Cinema> ListOfCinemas = new ArrayList<>();
-                            for (int m = 0; m < halls.length; m++) {
-                                for (int l = 0; l < halls[m].length; ++l) {
-                                    for (int hall = 0; hall < sessionHalls.size(); ++hall) {
-                                        if (halls[m][l] == sessionHalls.get(hall)) {
-                                            ListOfCinemas.add(cinemas.get(m));
-                                        }
-                                    }
-                                }
-                            }
-                            Set<Cinema> set2 = new HashSet<>(ListOfCinemas);
-                            ListOfCinemas.clear();
-                            ListOfCinemas.addAll(set2);
-                            int Number = 0;
-                            for (int cinema = 0; cinema < ListOfCinemas.size(); cinema++) {
-                                System.out.println(ListOfCinemas.get(cinema).getNameOfCinema() + " "
-                                        + ListOfCinemas.get(cinema).getAddress());
-                            }
-                            // На тот случай, если в городе есть несколько кинотеатров с разными названиями.
-                            System.out.println("Please, choose your preferred cinema. Enter its name. ");
-                            String nameOfCinema = in.nextLine();
-
-                            System.out.println("Available sessions: ");
-                            for (int session = 0; session < movie.getMovieSessions().size(); ++session) {
-                                if (movie.getMovieSessions().get(session).getSession().getDate().equals(date) &&
-                                        movie.getMovieSessions().get(session).getSession().getNumberOfTickets() != 0) {
-                                    System.out.println(movie.getNameOfMovie() + " " + date + " " + movie.getMovieSessions().get(session).getSession().getTime());
-                                }
-                            }
-                        }
-                    }
-                    if (flag == true){
-                        System.out.printf("Sorry, there are no sessions for " + movie.getNameOfMovie() + " on this date.");
-                        break;
-                    }
+        if (!movie.getNameOfMovie().isEmpty() && movie.getSumNumberOfTickets() != 0) {
+            boolean flag = false;
+            System.out.println("Input a date:");
+            String date = in.nextLine();
+            // Проверим, есть ли билеты на сеанс на конкретную дату
+            int SumOfTicketsOfSessions = 0;
+            for (int i = 0; i < movie.getMovieSessions().size(); ++i) {
+                if (movie.getMovieSessions().get(i).getSession().getDate().equals(date)) {
+                    flag = true;
+                    SumOfTicketsOfSessions += movie.getMovieSessions().get(i).getSession().getNumberOfTickets();
                 }
             }
-            if (flag == false){
-                System.out.println("Sorry, this movie is not on the list.");
-                break;
+            if (!flag) {
+                System.out.println("Sorry, there are no sessions on this date.");
+            }
+//            for (int s = 0; s < movie.getMovieSessions().size(); ++s) {
+//                if (movie.getMovieSessions().get(s).getSession().getDate().equals(date)) {
+//                    flag2 = true;
+//                    int SumOfTicketsOfSessions = 0;
+//                    for (int j = 0; j < movie.getMovieSessions().size(); ++j) {
+//                        if (movie.getMovieSessions().get(j).getSession().getDate().equals(date)) {
+//                            SumOfTicketsOfSessions += movie.getMovieSessions().get(j).getSession().getNumberOfTickets();
+//                        }
+//                    }
+            if (SumOfTicketsOfSessions == 0 && flag) {
+                System.out.println("Sorry, there are no tickets for this date.");
+            } else if (SumOfTicketsOfSessions != 0 && flag) {
+                // Находим залы, в которых будут проходить сеансы этого фильма в конкретную дату
+                for (int k = 0; k < movieSessionHalls.size(); ++k) {
+                    if (movieSessionHalls.get(k).getMovieSession().getSession().getDate().equals(date)
+                            && movieSessionHalls.get(k).getMovieSession().getMovie() == movie) {
+                        sessionHalls.add(movieSessionHalls.get(k).getHall());
+                    }
+                }
+
+                // Создадим множество уникальных элементов, чтобы залы не повторялись
+                Set<Hall> set = new HashSet<>(sessionHalls);
+                sessionHalls.clear();
+                sessionHalls.addAll(set);
+                // Создадим список кинотеатров, в которых проходят сеансы фильмов в определённую дату
+                ArrayList<Cinema> ListOfCinemas = new ArrayList<>();
+                for (int m = 0; m < halls.length; m++) {
+                    for (int l = 0; l < halls[m].length; ++l) {
+                        for (int hall = 0; hall < sessionHalls.size(); ++hall) {
+                            if (halls[m][l] == sessionHalls.get(hall)) {
+                                ListOfCinemas.add(cinemas.get(m));
+                                //cinemas.get(m).setNumberOfCinema(m + 1);
+                            }
+                        }
+                    }
+                }
+                Set<Cinema> set2 = new HashSet<>(ListOfCinemas);
+                ListOfCinemas.clear();
+                ListOfCinemas.addAll(set2);
+                int Number = 1;
+                for (int cinema = 0; cinema < ListOfCinemas.size(); cinema++) {
+                    System.out.println((Number + cinema) + ". " + ListOfCinemas.get(cinema).getNameOfCinema() + " "
+                            + ListOfCinemas.get(cinema).getAddress());
+                    ListOfCinemas.get(cinema).setNumberOfPreferredCinema(Number + cinema);
+                }
+
+                System.out.println("Please, choose your preferred cinema. Enter its number. ");
+                int numberOfCinema = in.nextInt();
+                Cinema prefferedCinema = new Cinema("", "", 0);
+                // Ищем выбранный кинотеатр в списке
+                for (int j = 0; j < cinemas.size(); ++j) {
+                    if (cinemas.get(j).getNumberOfPreferredCinema() == numberOfCinema) {
+                        prefferedCinema = cinemas.get(j);
+                    }
+                }
+
+//                for (int m = 0; m < halls.length; m++) {
+//                    if (prefferedCinema.getNumberOfCinema() == m) {
+//                        prefferedCinema.setNumberOfCinema(m);
+//                    }
+//                }
+                System.out.println(prefferedCinema.getNumberOfCinema());
+
+                // Ищем, есть ли сеансы, проходящие в залах этого кинотеатра?
+                Hall CurrentHall;
+                List<Hall> currentHalls = new ArrayList<>();
+//                            for (int hall = 0; hall < sessionHalls.size(); hall++){
+//                                sessionHalls.get(hall).initHall(100);
+//                                sessionHalls.get(hall).getPlaces()[0][0].initFreePlaces();
+//                            }
+                for (int j = 0; j < halls[prefferedCinema.getNumberOfCinema()].length; ++j) {
+                    for (int k = 0; k < sessionHalls.size(); ++k) {
+                        if (halls[prefferedCinema.getNumberOfCinema()][j] == sessionHalls.get(k)) {
+                            CurrentHall = sessionHalls.get(k);
+                            currentHalls.add(CurrentHall);
+                        }
+                    }
+                }
+                Number = 1;
+                System.out.println("Available sessions: ");
+                for (int session = 0; session < movieSessionHalls.size(); ++session) {
+                    for (int hall = 0; hall < currentHalls.size(); hall++) {
+                        if (movieSessionHalls.get(session).getMovieSession().getMovie() == movie &&
+                                movieSessionHalls.get(session).getMovieSession().getSession().getDate().equals(date) &&
+                                movieSessionHalls.get(session).getMovieSession().getSession().getNumberOfTickets() != 0 &&
+                                movieSessionHalls.get(session).getHall() == currentHalls.get(hall)) {
+                            System.out.println((Number + hall) + ". " + movie.getNameOfMovie() + " " + date + " " + movieSessionHalls.get(session).getMovieSession().getSession().getTime());
+                            movieSessionHalls.get(session).getMovieSession().setNumberOfMovieSession(Number + hall);
+                        }
+                    }
+                }
+                System.out.println("Enter a number of session.");
+                int numberOfMovieSession = in.nextInt();
+                Hall ChoosedHall = new Hall(0, 0, 1);
+                Session ChoosedSession = new Session("", "", 0);
+                System.out.println("Available halls:");
+                for (int j = 0; j < movieSessionHalls.size(); j++) {
+                    if (movieSessionHalls.get(j).getMovieSession().getNumberOfMovieSession() == numberOfMovieSession) {
+                        System.out.println("Hall " + movieSessionHalls.get(j).getHall().getNumberOfHall());
+                        ChoosedHall = movieSessionHalls.get(j).getHall();
+                        ChoosedSession = movieSessionHalls.get(j).getMovieSession().getSession();
+                    }
+                }
+                System.out.println("Choose a hall, enter its number:");
+                int numberOfHall = in.nextInt();
+                for (int j = 0; j < prefferedCinema.HallsOfCinema.length; j++) {
+                    if (prefferedCinema.HallsOfCinema[j].getNumberOfHall() == numberOfHall) {
+                        prefferedCinema.HallsOfCinema[j].printHallPlan();
+                    }
+                }
+                int choose = 0;
+                while (choose != 3){
+                    System.out.println("Choose a free place. Enter its row: ");
+                    int rowOfPlace = in.nextInt();
+                    System.out.println("Enter its number: ");
+                    int numberOfPlace = in.nextInt();
+                    if (ChoosedHall.getPlaces()[ChoosedHall.getNumberOfRows() - rowOfPlace][ChoosedHall.getAmountOfPlaces() / ChoosedHall.getNumberOfRows() - numberOfPlace].isOccupied() == "     ") {
+                        choose += 1;
+                        ChoosedSession.setNumberOfTickets(ChoosedSession.getNumberOfTickets() - 1);
+                        ChoosedHall.getPlaces()[ChoosedHall.getNumberOfRows() - rowOfPlace][ChoosedHall.getAmountOfPlaces() / ChoosedHall.getNumberOfRows() - numberOfPlace].setOccupancy("occupied");
+                        System.out.println("\nYour ticket costs " + ChoosedHall.getPlaces()[ChoosedHall.getNumberOfRows() - rowOfPlace][ChoosedHall.getAmountOfPlaces() / ChoosedHall.getNumberOfRows() - numberOfPlace].getPrice() + "$.");
+                        System.out.println("You have to pay the money.");
+                    }
+                    else {
+                        System.out.println("Sorry, the seat you have chosen is occuped.");
+                        ChoosedHall.getPlaces()[ChoosedHall.getNumberOfRows() - rowOfPlace][ChoosedHall.getAmountOfPlaces() / ChoosedHall.getNumberOfRows() - numberOfPlace].setOccupancy("occupied");
+                        ChoosedHall.printHallPlan();
+                    }
+                }
             }
         }
     }

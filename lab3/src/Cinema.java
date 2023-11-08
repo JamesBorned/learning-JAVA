@@ -34,7 +34,25 @@ public class Cinema {
         this.NumberOfHalls = numberOfHalls;
     }
 
+    public int getNumberOfPreferredCinema(){
+        return NumberOfPreferredCinema;
+    }
+
+    public void setNumberOfPreferredCinema(int numberOfPreferredCinema){
+        this.NumberOfPreferredCinema = numberOfPreferredCinema;
+    }
+
+    public int getNumberOfCinema(){
+        return NumberOfCinema;
+    }
+
+    public void setNumberOfCinema(int numberOfCinema){
+        this.NumberOfCinema = numberOfCinema;
+    }
+
     private String NameOfCinema;
     private String Address;
     private int NumberOfHalls;
+    private int NumberOfPreferredCinema;
+    private int NumberOfCinema;
 }
