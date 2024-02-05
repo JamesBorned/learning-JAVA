@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" style="-fx-background-color: #abcdef;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.todo_list.todo_list.controller.AddItemController">
+   <children>
+      <AnchorPane layoutY="68.0" prefHeight="331.0" prefWidth="700.0" style="-fx-background-color: #fff8e7;">
+         <children>
+            <Label layoutX="264.0" layoutY="134.0" text="Not Tasks for Today, yet!">
+               <font>
+                  <Font name="Bookman Old Style" size="16.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="89.0" fitWidth="108.0" layoutX="305.0" layoutY="176.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../java/com/todo_list/todo_list/assets/add.png" />
+               </image></ImageView>
+         </children>
+      </AnchorPane>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="262.0" prefHeight="70.0" prefWidth="175.0" text="JUST DO IT" textAlignment="CENTER">
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0" startX="0.4015151953155344" startY="0.4696969552473588">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="1.0" green="0.22745098173618317" blue="0.22745098173618317" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.10588235408067703" green="0.10196078568696976" blue="0.10196078568696976" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill>
+         <font>
+            <Font name="Bookman Old Style" size="24.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
